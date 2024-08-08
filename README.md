@@ -5,8 +5,8 @@
   [**BLAST**](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html) [>= 2.13]
   [**PLASME**](https://github.com/HubertTang/PLASMe) [>= 1.1]
 
-To run OMAP-KP:
-+ [**R**](https://www.r-project.org/) [>= 3.6.1]
++ To run OMAP-KP:
+  [**R**](https://www.r-project.org/) [>= 3.6.1]
   [**data.table**](https://cran.r-project.org/web/packages/data.table/index.html) [>=1.13]
   [**IRanges**](https://bioconductor.org/packages/release/bioc/html/IRanges.html) [>=2.36]    
 
