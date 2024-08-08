@@ -1,5 +1,5 @@
 # OMAP-KP
-**OMAP-KP** is an R script that performs ordered mapping and assignment for plasmids identification in NGS data from KP.  
+**OMAP-KP** is an R script that performs ordered mapping and assignment for plasmid identification in NGS data from KP.  
 ## Dependencies
 To prepare OMAP-KP's inputs:
 [**BLAST**](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html) [>= 2.13]
@@ -11,8 +11,9 @@ To run OMAP-KP:
 [**IRanges**](https://bioconductor.org/packages/release/bioc/html/IRanges.html) [>=2.36]    
 
 ## Sample Run 
+The required demo files can be found in omap_test_data
 ```bash
-Rscript OMAP-KP_v0.1.2.R ./test/genome.blast.out  ./test/ ./test/plasme_out_report.csv  OMAP-KP_clusters_21.txt 
+Rscript OMAP-KP_v0.1.2.R omap_test_data/kp_demo_blast.out  omap_test_data/  omap_test_data/plasme_out_report.csv OMAP-KP_clusters_21.txt 
 ```
 
 ## Usage 
@@ -26,10 +27,12 @@ Rscript OMAP-KP_v0.1.2.R ./test/genome.blast.out  ./test/ ./test/plasme_out_repo
     blastn -query ./dir/to/your/genome.fna  -db ./dir/to/ref/plsdb_ref  -evalue 1e-10  -num_threads 4 -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qcovs qcovhsp slen qlen' -dust no -soft_masking false  > ./dir/to/your/genome.blast.out
     ```
 2. PLASME input
+   Please install PLASMe and follow its instruction
     ```bash
     python PLASMe.py ./dir/to/your/genome.fna  ./dir/to/your/plasme_out 
     ```
-
+4. Cluster annotation file
+   Available here in the repository (OMAP-KP_clusters_21.txt)
 ### Run OMAP-KP
 1. To run the script:
     ```bash
@@ -38,7 +41,7 @@ Rscript OMAP-KP_v0.1.2.R ./test/genome.blast.out  ./test/ ./test/plasme_out_repo
 
 ## Output
 1. [filename]_hc_dt.tsv
-    A file contains: 
+    A file contains: filename, pls_id, cluster, scovs, and slen.
 2. [filename]_hc_raw.tsv
-    A file contains: 
+    A file contains the raw data of hc_dt.tsv file, including the names of contigs that are assigned to the plasmid.
 
