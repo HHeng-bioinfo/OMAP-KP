@@ -1,14 +1,14 @@
 # OMAP-KP
 **OMAP-KP** is an R script that performs ordered mapping and assignment for plasmid identification in NGS data from KP.  
 ## Dependencies
-To prepare OMAP-KP's inputs:
-[**BLAST**](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html) [>= 2.13]
-[**PLASME**](https://github.com/HubertTang/PLASMe) [>= 1.1]
++ To prepare OMAP-KP's inputs:
+  [**BLAST**](https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html) [>= 2.13]
+  [**PLASME**](https://github.com/HubertTang/PLASMe) [>= 1.1]
 
 To run OMAP-KP:
-[**R**](https://www.r-project.org/) [>= 3.6.1]
-[**data.table**](https://cran.r-project.org/web/packages/data.table/index.html) [>=1.13]
-[**IRanges**](https://bioconductor.org/packages/release/bioc/html/IRanges.html) [>=2.36]    
++ [**R**](https://www.r-project.org/) [>= 3.6.1]
+  [**data.table**](https://cran.r-project.org/web/packages/data.table/index.html) [>=1.13]
+  [**IRanges**](https://bioconductor.org/packages/release/bioc/html/IRanges.html) [>=2.36]    
 
 ## Sample Run 
 The required demo files can be found in omap_test_data
