@@ -12,7 +12,7 @@ To run OMAP-KP:
 
 ## Sample Run 
 ```bash
-Rscript listtable/OMAP-KP_v0.1.2.R ./test/genome.blast.out  ./test/ ./test/plasme_out_report.csv  OMAP-KP_clusters_21.txt 
+Rscript OMAP-KP_v0.1.2.R ./test/genome.blast.out  ./test/ ./test/plasme_out_report.csv  OMAP-KP_clusters_21.txt 
 ```
 
 ## Usage 
@@ -23,7 +23,7 @@ Rscript listtable/OMAP-KP_v0.1.2.R ./test/genome.blast.out  ./test/ ./test/plasm
     makeblastdb -in  ./dir/to/ref/plsdb.fna  -dbtype nucl  -parse_seqids -out ./dir/to/ref/plsdb_ref
     ```
     ```bash
-    blastn -query ./dir/to/your/genome.fna  -db ./dir/to/ref/plsdb_ref  -evalue 1e-10  -num_threads 4 -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qcovs qcovhsp slen qlen' -dust no -soft_masking false | awk -v filename="your_file_name" '{print filename"\t"$0}' > ./dir/to/your/genome.blast.out
+    blastn -query ./dir/to/your/genome.fna  -db ./dir/to/ref/plsdb_ref  -evalue 1e-10  -num_threads 4 -outfmt '6 qseqid sseqid pident length mismatch gapopen qstart qend sstart send evalue bitscore qcovs qcovhsp slen qlen' -dust no -soft_masking false  > ./dir/to/your/genome.blast.out
     ```
 2. PLASME input
     ```bash
@@ -33,7 +33,7 @@ Rscript listtable/OMAP-KP_v0.1.2.R ./test/genome.blast.out  ./test/ ./test/plasm
 ### Run OMAP-KP
 1. To run the script:
     ```bash
-    Rscript listtable/OMAP-KP_v0.1.2.R ./dir/to/your/genome.blast.out  ./dir/to/your/output.dir/ ./dir/to/your/plasme_out_report.csv  OMAP-KP_clusters_21.txt 
+    Rscript OMAP-KP_v0.1.2.R ./dir/to/your/genome.blast.out  ./dir/to/your/output.dir/ ./dir/to/your/plasme_out_report.csv  OMAP-KP_clusters_21.txt 
     ```
 
 ## Output
