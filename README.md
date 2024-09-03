@@ -45,3 +45,5 @@ Rscript OMAP-KP_v0.1.2.R omap_test_data/kp_demo_blast.out  omap_test_data/  omap
 2. [filename]_hc_raw.tsv
     A file contains the raw data of hc_dt.tsv file, including the names of contigs that are assigned to the plasmid.
 
+## Validation files
+https://github.com/HHeng-bioinfo/OMAP-KP_seq
