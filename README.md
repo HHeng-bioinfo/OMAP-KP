@@ -46,7 +46,7 @@ Rscript OMAP-KP_v0.1.2.R omap_test_data/kp_demo_blast.out  omap_test_data/  omap
     A file contains the raw data of hc_dt.tsv file, including the names of contigs that are assigned to the plasmid.
 
 ## Validation files
-The validation dataset suggested a recall score of 84% for plasmids exceeding 5,000 bp in length from 35 draft genomes. (Updated in 2024/09/04)
+The validation dataset suggested a recall score of 84% for plasmids exceeding 5,000 bp in length from 36 draft genomes. (Updated in 2024/09/11)
 
 https://github.com/HHeng-bioinfo/OMAP-KP_seq
 
