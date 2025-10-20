@@ -1,7 +1,7 @@
 #!/usr/bin/env Rscript
 
 ## Info
-# Version 2.0.2
+# Version 2.0.1
 # conda activate R_4.3
 # HHeng
 # v2.0 2025/10/20
@@ -13,8 +13,8 @@
 ##### Sec 1 library and load #####
 ##### __Sec 1.1 library #####
 ## library
-library(data.table)
-library(IRanges)
+suppressPackageStartupMessages(library(data.table))
+suppressPackageStartupMessages(library(IRanges))
 
 
 
@@ -200,7 +200,7 @@ part_blast[, pls_id := sseqid]
 print(paste0("Blast result contains:", nrow(part_blast)))
 
 #
-gc()
+# gc()
 
 #
 part_blast <- merge.data.table(part_blast, pls_clu[, .(sseqid, cluster)], by = "sseqid")
@@ -213,7 +213,7 @@ part_blast[, bitscore := NULL]
 part_blast[, qcovhsp := NULL]
 
 #
-gc()
+# gc()
 
 
 
@@ -271,12 +271,16 @@ if (nrow(part_blast) == 0) {
         target_per <- part_out_in[strain == filename_in][pls_id == pls_id_in][, red_len(sstart, send), by = .(strain, pls_id, cluster, slen)][, .(strain, pls_id, cluster, scovs = V1/slen, slen)]
         
         #
-        if (target_per$scovs >= 0.8) {
-          #
-          target_out <- rbind(target_out, target_per)
-          
-          #
-          print(paste0("Include: ", filename_in, " ", pls_id_in))
+        if (nrow(target_per) != 0) {
+          if (target_per$scovs >= 0.8) {
+            #
+            target_out <- rbind(target_out, target_per)
+            
+            #
+            print(paste0("Include: ", filename_in, " ", pls_id_in))
+          } else {
+            print(paste0("Removed (mge): ", filename_in, " ", pls_id_in))
+          }
         } else {
           print(paste0("Removed (mge): ", filename_in, " ", pls_id_in))
         }
@@ -311,7 +315,7 @@ if (nrow(part_blast) == 0) {
         }
         
         #
-        gc()
+        # gc()
         
         
         ## Filter and re-assign
@@ -330,7 +334,7 @@ if (nrow(part_blast) == 0) {
         part_out_in <- merge(part_blast, part_map[, .(strain, pls_id)], by = c("strain", "pls_id"))
         
         #
-        gc()
+        # gc()
         
       }
     }
@@ -339,32 +343,36 @@ if (nrow(part_blast) == 0) {
 
 
 ##### __Sec 3.3 output #####
+## remove old file
+if (file.exists(paste0(out_dir, "/", strain_name, "_subpls.tsv"))) file.remove(paste0(out_dir, "/", strain_name, "_subpls.tsv"))
+if (file.exists(paste0(out_dir, "/", strain_name, "_pls.tsv"))) file.remove(paste0(out_dir, "/", strain_name, "_pls.tsv"))
+if (file.exists(paste0(out_dir, "/", strain_name, "_pls_raw.tsv"))) file.remove(paste0(out_dir, "/", strain_name, "_pls_raw.tsv"))
+
 ## write
 if (nrow(sub_out) != 0) {
-  sub_out_dt <- sub_out[, .(strain, cluster = pc)][, .N, by = c("strain", "cluster")][N > 1]
-  if (file.exists(paste0(out_dir, "/", strain_name, "_subpls.tsv"))) file.remove(paste0(out_dir, "/", strain_name, "_subpls.tsv"))
+  #
   fwrite(sub_out, paste0(out_dir, "/", strain_name, "_subpls.tsv"), sep = '\t', eol = '\n')
-  gc()
+  # gc()
+  
+  # remove sub
+  sub_out_dt <- sub_out[, .(strain, cluster = pc)][, .N, by = c("strain", "cluster")][N > 1]
+  if ((nrow(sub_out_dt) != 0) & (nrow(target_out) != 0)) {
+    target_out <- target_out[!sub_out_dt, on=.(strain, cluster)]
+    print(paste0("Found sub plasmid pair within HC"))
+  } 
 } else {
   print(paste0("No sub plasmids"))
 }
 
-# remove sub
-if (nrow(sub_out_dt) != 0) {
-  target_out <- target_out[!sub_out_dt, on=.(strain, cluster)]
-} else {
-  print(paste0("No sub plasmid pair"))
-}
+
+
 
 
 
 # write HC
 if (nrow(target_out) != 0) {
   #
-  if (file.exists(paste0(out_dir, "/", strain_name, "_pls.tsv"))) file.remove(paste0(out_dir, "/", strain_name, "_pls.tsv"))
   fwrite(target_out, paste0(out_dir, "/", strain_name, "_pls.tsv"), sep = '\t', eol = '\n')
-  #
-  if (file.exists(paste0(out_dir, "/", strain_name, "_pls_raw.tsv"))) file.remove(paste0(out_dir, "/", strain_name, "_pls_raw.tsv"))
   fwrite(merge(target_out, part_blast, by = c("strain", "cluster", "pls_id", "slen")),
          paste0(out_dir, "/", strain_name, "_pls_raw.tsv"), sep = '\t', eol = '\n')
 } else {
@@ -372,7 +380,7 @@ if (nrow(target_out) != 0) {
 }
 
 #
-gc()
+# gc()
 
 
 ##
